@@ -60,10 +60,11 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    justifyContent: 'space-between',
     padding: 5
   },
   flatList: {
-    flex: 1,
+    flex: 1
   }
 });
 
