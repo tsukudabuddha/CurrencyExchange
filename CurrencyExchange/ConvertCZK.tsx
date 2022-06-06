@@ -24,10 +24,6 @@ export default function ConvertCZK(currencyList: CurrencyInfo[]) {
     setCurrency(currencyList[index]);
   }
 
-  
-  // console.log("Here")
-  // console.log(currencyList[0]);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.row}>
@@ -57,8 +53,6 @@ export default function ConvertCZK(currencyList: CurrencyInfo[]) {
 };
 
 function getConvertedValue(czhValue: number, currency: CurrencyInfo) {
-  console.log(czhValue);
-  console.log(currency.rate)
   const convertedValue: number = czhValue / Number(currency.rate) * Number(currency.amount)
   return convertedValue.toFixed(2)
 }
@@ -75,6 +69,7 @@ const styles = StyleSheet.create({
     width: 300
   },
   input: {
+    flex: 1/2,
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -87,4 +82,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center'
   },
+  text: {
+    padding: 10,
+    margin: 12
+  }
 });
