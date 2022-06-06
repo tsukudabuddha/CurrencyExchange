@@ -1,8 +1,6 @@
 import * as React from 'react'; 
 import { Text, StyleSheet, SafeAreaView, Button } from 'react-native';
-import { Overlay } from 'react-native-elements';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-import ConvertCZK from './ConvertCZK';
 import { ExchangeRateTable } from './ExchangeRateTable';
  
 const queryClient = new QueryClient()
