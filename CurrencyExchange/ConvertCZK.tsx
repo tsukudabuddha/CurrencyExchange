@@ -1,6 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, View, Text} from "react-native";
-import { Button } from "react-native-elements";
+import { SafeAreaView, StyleSheet, TextInput, View, Text, KeyboardAvoidingView, Platform} from "react-native";
 import { Picker } from '@react-native-picker/picker';
 
 type CurrencyInfo = {
@@ -17,18 +16,18 @@ export default function ConvertCZK(currencyList: CurrencyInfo[]) {
 
   const [czhValue, setInputValue] = React.useState(0);
   const [currencyInfo, setCurrency] = React.useState(currencyList[0]);
-  const [selectedCurrencyCode, setSelectedValue] = React.useState(currencyList[0].code);
+  const [selectedCurrencyCode, setCurrencyCode] = React.useState(currencyList[0].code);
   const [convertedValue, setConvertedValue] = React.useState("0.00");
 
 
-  function handleValueChange(value, index) {
-    setSelectedValue(value);
+  function handleValueChange(value: string, index: number) {
+    setCurrencyCode(value);
     setCurrency(currencyList[index]);
     
     setConvertedValue(getConvertedValue(czhValue, currencyList[index]));
   }
 
-  function handleTextChange(text) {
+  function handleTextChange(text: string) {
     const num = Number(text);
     setInputValue(num);
     setConvertedValue(getConvertedValue(num, currencyInfo));
@@ -36,28 +35,31 @@ export default function ConvertCZK(currencyList: CurrencyInfo[]) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.row}>
-        <TextInput
-          style={styles.input}
-          onChangeText={handleTextChange}
-          value={String(czhValue)}
-          keyboardType="numeric"
-        />
-        <Text style={styles.text}>
-          CZK to
-        </Text>
-      </View>
-      <Picker
-          style = {styles.pickerStyle}
-          selectedValue={selectedCurrencyCode}
-          onValueChange={(value, index) => handleValueChange(value, index)}
-        >
-          {currencyList.map(x => <Picker.Item label={x.code} value={x.code} /> )}
-        </Picker>
-      <View style={styles.row}>
-        <Text style={styles.titleText}>{convertedValue + " " + currencyInfo.currency}</Text>
-      </View>
-      
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.row}>
+          <TextInput
+            style={styles.input}
+            onChangeText={handleTextChange}
+            value={String(czhValue)}
+            keyboardType="numeric"
+          />
+          <Text style={styles.text}>
+            CZK to
+          </Text>
+        </View>
+        <Picker
+            style = {styles.pickerStyle}
+            selectedValue={selectedCurrencyCode}
+            onValueChange={(value, index) => handleValueChange(value, index)}
+          >
+            {currencyList.map(x => <Picker.Item key={x.code} label={x.code} value={x.code} /> )}
+          </Picker>
+        <View style={styles.row}>
+          <Text style={styles.titleText}>{convertedValue + " " + currencyInfo.currency}</Text>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -76,7 +78,11 @@ function PickerItem(info: CurrencyInfo) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 300
+    flex: .5,
+    width: 300,
+    maxHeight: '85%',
+    justifyContent: 'flex-start',
+    alignContent: 'center'
   },
   input: {
     flex: 1/2,

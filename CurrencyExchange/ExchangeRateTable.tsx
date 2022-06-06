@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
     width:'100%'
-  }
+  },
 });
 
 // Unwrap undefined arrays (Is there a better builtin way to do this?)
