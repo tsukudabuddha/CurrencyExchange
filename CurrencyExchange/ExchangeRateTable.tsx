@@ -28,6 +28,11 @@ export function ExchangeRateTable(data: TableInfo) {
 
   return(
     <>
+      <FlatList 
+        data={listData}
+        renderItem={renderItem}
+        style={styles.flatList}
+      />
       <Button
         title="Convert CZK"
         color="#f194ff"
@@ -36,11 +41,6 @@ export function ExchangeRateTable(data: TableInfo) {
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <ConvertCZK currencyList={listData}/>
       </Overlay>
-      <FlatList 
-        data={listData}
-        renderItem={renderItem}
-        style={styles.flatList}
-      />
     </>
     
   );
