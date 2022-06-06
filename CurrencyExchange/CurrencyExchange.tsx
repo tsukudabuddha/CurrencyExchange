@@ -1,6 +1,8 @@
-import * as React from 'react';
-import { FlatList, ListRenderItem, Text, StyleSheet, SafeAreaView, View } from 'react-native';
+import * as React from 'react'; 
+import { Text, StyleSheet, SafeAreaView, Button } from 'react-native';
+import { Overlay } from 'react-native-elements';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import ConvertCZK from './ConvertCZK';
 import { ExchangeRateTable } from './ExchangeRateTable';
  
 const queryClient = new QueryClient()
@@ -9,7 +11,7 @@ export default function CurrencyExchange() {
   return (
     <SafeAreaView style={styles.container}>
       <QueryClientProvider client={queryClient}>
-        <Main />
+        <Main/>
       </QueryClientProvider>
     </SafeAreaView>
   )
@@ -42,8 +44,6 @@ async function getExhangeRates() {
   }
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    width:'100%'
   },
 });

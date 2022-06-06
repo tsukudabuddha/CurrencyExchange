@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { FlatList, ListRenderItem, Text, StyleSheet, SafeAreaView, View } from 'react-native';
+import { FlatList, ListRenderItem, Text, StyleSheet, Button, View } from 'react-native';
+import { Overlay } from 'react-native-elements';
+import ConvertCZK from './ConvertCZK';
 type TableInfo = {
   data: string[]
 }
@@ -7,8 +9,7 @@ type TableInfo = {
 export function ExchangeRateTable(data: TableInfo) {
   const tableItems = data.data.map(createTableItem);
   const listData: TableItem[] = tableItems.filter(notEmpty);
-
-  // console.log(listData);
+  listData.shift()
 
   const renderItem: ListRenderItem<TableItem> = ({ item }) => (
     <View style={styles.row}>
@@ -19,12 +20,29 @@ export function ExchangeRateTable(data: TableInfo) {
     </View>
     
   );
+
+  const [visible, setVisible] = React.useState(false);
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
   return(
-    <FlatList 
-      data={listData}
-      renderItem={renderItem}
-      style={styles.flatList}
-    />
+    <>
+      <Button
+        title="Convert CZK"
+        color="#f194ff"
+        onPress={toggleOverlay}
+      />
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <ConvertCZK currencyList={listData}/>
+      </Overlay>
+      <FlatList 
+        data={listData}
+        renderItem={renderItem}
+        style={styles.flatList}
+      />
+    </>
+    
   );
 }
 
@@ -42,7 +60,6 @@ function createTableItem(lineOfData: string) {
     return
   }
 
-  console.log(items);
   const tableItem: TableItem = ({
     'country': items[0],
     'currency': items[1],
@@ -61,10 +78,13 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: 'space-between',
-    padding: 5
+    width: '85%',
+    height: 30,
+    alignSelf: 'center'
   },
   flatList: {
-    flex: 1
+    flex: 1,
+    width:'100%'
   }
 });
 
