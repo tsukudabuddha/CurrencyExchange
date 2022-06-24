@@ -6,17 +6,17 @@ type TableInfo = {
   data: string[]
 }
 
-export function ExchangeRateTable(data: TableInfo) {
-  const tableItems = data.data.map(createTableItem);
+export function ExchangeRateTable(tableInfo: TableInfo) {
+  const tableItems = tableInfo.data.map(createTableItem);
   const listData: TableItem[] = tableItems.filter(notEmpty);
   listData.shift()
 
   const renderItem: ListRenderItem<TableItem> = ({ item }) => (
     <View style={styles.row}>
-      <Text>{item.country}</Text>
-      <Text>{item.code}</Text>
-      <Text>{item.amount}</Text>
-      <Text>{item.rate}</Text>
+      <Text style={styles.countryRowItem}>{item.country}</Text>
+      <Text style={styles.rowItem}>{item.code}</Text>
+      <Text style={styles.rowItem}>{item.amount}</Text>
+      <Text style={styles.rowItem}>{item.rate}</Text>
     </View>
     
   );
@@ -71,7 +71,13 @@ function createTableItem(lineOfData: string) {
 }
 
 const styles = StyleSheet.create({
+  countryRowItem: {
+    flex: 1.5,
+    paddingHorizontal: 8,
+    alignSelf: 'center',
+  },
   rowItem: {
+    flex: 1,
     paddingHorizontal: 8,
     alignSelf: 'center',
   },
