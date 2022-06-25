@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { FlatList, ListRenderItem, Text, StyleSheet, Button, View } from 'react-native';
+import { FlatList, ListRenderItem, Text, StyleSheet, Button, View, Modal } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import ConvertCZK from './ConvertCZK';
+import BottomModal from './ui_components/BottomModal'
 type TableInfo = {
   data: string[]
 }
 
 export function ExchangeRateTable(tableInfo: TableInfo) {
   const tableItems = tableInfo.data.map(createTableItem);
-  const listData: TableItem[] = tableItems.filter(notEmpty);
+  const listData: CurrencyInfo[] = tableItems.filter(notEmpty);
   listData.shift()
 
-  const renderItem: ListRenderItem<TableItem> = ({ item }) => (
+  const renderItem: ListRenderItem<CurrencyInfo> = ({ item }) => (
     <View style={styles.row}>
       <Text style={styles.countryRowItem}>{item.country}</Text>
       <Text style={styles.rowItem}>{item.code}</Text>
@@ -28,25 +29,25 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
 
   return(
     <>
-      <FlatList 
-        data={listData}
-        renderItem={renderItem}
-        style={styles.flatList}
-      />
-      <Button
-        title="Convert CZK"
-        color="#f194ff"
-        onPress={toggleOverlay}
-      />
-      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <ConvertCZK currencyList={listData}/>
-      </Overlay>
+      <>
+        <FlatList 
+          data={listData}
+          renderItem={renderItem}
+          style={styles.flatList}
+        />
+        <Button
+          title="Convert CZK"
+          color="#f194ff"
+          onPress={toggleOverlay}
+        />
+      </>
+      <ConvertCZK visible={visible} dismissHandler={toggleOverlay} currencyList={listData}></ConvertCZK>
     </>
     
   );
 }
 
-type TableItem = {
+type CurrencyInfo = {
   country: string;
   currency: string;
   amount: string;
@@ -60,7 +61,7 @@ function createTableItem(lineOfData: string) {
     return
   }
 
-  const tableItem: TableItem = ({
+  const tableItem: CurrencyInfo = ({
     'country': items[0],
     'currency': items[1],
     'amount': items[2],
@@ -92,6 +93,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width:'100%'
   },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'black'
+  }
 });
 
 // Unwrap undefined arrays (Is there a better builtin way to do this?)

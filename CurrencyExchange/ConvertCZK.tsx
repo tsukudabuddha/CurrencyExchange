@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, View, Text, KeyboardAvoidingView, Platform} from "react-native";
+import { SafeAreaView, StyleSheet, Modal, TouchableOpacity, TextInput, View, Text, KeyboardAvoidingView, Platform} from "react-native";
 import { Picker } from '@react-native-picker/picker';
 
 type CurrencyInfo = {
@@ -10,15 +10,20 @@ type CurrencyInfo = {
   rate: string;
 }
 
-export default function ConvertCZK(currencyList: CurrencyInfo[]) {
-  currencyList = currencyList.currencyList
+type ConvertCZKProps = {
+  currencyList: CurrencyInfo[]
+  visible: boolean
+  dismissHandler: () => void
+}
+
+export default function ConvertCZK(props: ConvertCZKProps) {
+  let currencyList = props.currencyList
   currencyList.sort((a,b) => (a.code > b.code) ? 1 : ((b.code > a.code) ? -1 : 0))
 
   const [czhValue, setInputValue] = React.useState(0);
   const [currencyInfo, setCurrency] = React.useState(currencyList[0]);
   const [selectedCurrencyCode, setCurrencyCode] = React.useState(currencyList[0].code);
   const [convertedValue, setConvertedValue] = React.useState("0.00");
-
 
   function handleValueChange(value: string, index: number) {
     setCurrencyCode(value);
@@ -34,9 +39,22 @@ export default function ConvertCZK(currencyList: CurrencyInfo[]) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View>
+      <Modal 
+      animationType="slide"
+      transparent={true}
+      onRequestClose={props.dismissHandler}
+      visible={props.visible}
+    >
+      <TouchableOpacity
+        style={styles.overlay}
+        onPress={props.dismissHandler}
+        activeOpacity={1}
+      >
+      </TouchableOpacity>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
       >
         <View style={styles.row}>
           <TextInput
@@ -60,7 +78,8 @@ export default function ConvertCZK(currencyList: CurrencyInfo[]) {
           <Text style={styles.titleText}>{convertedValue + " " + currencyInfo.currency}</Text>
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Modal>
+    </View>
   );
 };
 
@@ -77,12 +96,18 @@ function PickerItem(info: CurrencyInfo) {
 }
 
 const styles = StyleSheet.create({
+  modal: {
+    flex: 1
+  },
   container: {
-    flex: .5,
-    width: 300,
-    maxHeight: '85%',
-    justifyContent: 'flex-start',
-    alignContent: 'center'
+    flex: 1/2,
+    flexDirection: 'column',
+    alignContent: 'flex-end',
+    backgroundColor: 'white'
+  },
+  overlay: {
+    flex: 1/2,
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   input: {
     flex: 1/2,
