@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { FlatList, ListRenderItem, Text, StyleSheet, Button, View, Modal } from 'react-native';
-import { Overlay } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 import ConvertCZK from './ConvertCZK';
-import BottomModal from './ui_components/BottomModal'
 type TableInfo = {
   data: string[]
 }
@@ -27,6 +26,8 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
     setVisible(!visible);
   };
 
+  const navigation = useNavigation();
+
   return(
     <>
       <>
@@ -38,10 +39,11 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
         <Button
           title="Convert CZK"
           color="#f194ff"
-          onPress={toggleOverlay}
+          onPress={() =>
+            navigation.navigate('ConvertCZK', { currencyList: listData })
+          }
         />
       </>
-      <ConvertCZK visible={visible} dismissHandler={toggleOverlay} currencyList={listData}></ConvertCZK>
     </>
     
   );

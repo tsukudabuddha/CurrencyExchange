@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import { ExchangeRateTable } from './ExchangeRateTable';
  
 const queryClient = new QueryClient()
-
 export default function CurrencyExchange() {
   return (
     <SafeAreaView style={styles.container}>
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    width:'100%',
-    margin: 12
+    width:'100%'
   },
 });

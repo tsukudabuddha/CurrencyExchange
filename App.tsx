@@ -1,23 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import CurrencyExchange from './CurrencyExchange/CurrencyExchange';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ConvertCZK from './CurrencyExchange/ConvertCZK';
+
+
+// TODO: Move this somewhere else/ make it public?
+type CurrencyInfo = {
+  country: string;
+  currency: string;
+  amount: string;
+  code: string;
+  rate: string;
+}
+
+type RootStackParamList = {
+  ExchangeRateTable: undefined;
+  ConvertCZK: { currencyList: CurrencyInfo[] };
+};
+
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <CurrencyExchange/>
-    </View>
+    <NavigationContainer>
+      <RootStack.Navigator>
+        <RootStack.Group>
+          <RootStack.Screen name="Exchange Rate Table" component={CurrencyExchange} />
+        </RootStack.Group>
+        <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+          <RootStack.Screen name="ConvertCZK" component={ConvertCZK} />
+        </RootStack.Group>
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width:'100%'
-  },
-});
+};
