@@ -2,15 +2,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, KeyboardAvoidingView, Platform, Pressable} from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from "../App";
-
-type CurrencyInfo = {
-  country: string;
-  currency: string;
-  amount: string;
-  code: string;
-  rate: string;
-}
+import { CurrencyInfo, RootStackParamList } from "../App";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ConvertCZK'>;
 

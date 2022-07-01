@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList, ListRenderItem, Text, StyleSheet, Button, View, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import { CurrencyInfo, RootStackParamList } from '../App';
 type TableInfo = {
   data: string[]
 }
@@ -38,14 +38,6 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
       />
     </SafeAreaView>
   );
-}
-
-type CurrencyInfo = {
-  country: string;
-  currency: string;
-  amount: string;
-  code: string;
-  rate: string;
 }
 
 function createTableItem(lineOfData: string) {

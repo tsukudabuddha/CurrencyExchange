@@ -5,7 +5,7 @@ import ConvertCZK from './CurrencyExchange/ConvertCZK';
 
 
 // TODO: Move this somewhere else/ make it public?
-type CurrencyInfo = {
+export type CurrencyInfo = {
   country: string;
   currency: string;
   amount: string;
