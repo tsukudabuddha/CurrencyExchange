@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, View, Text, KeyboardAvoidingView, Platform, Pressable} from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, View, Text, KeyboardAvoidingView, Platform, Pressable} from "react-native";
 import { Picker } from '@react-native-picker/picker';
 
 type CurrencyInfo = {
@@ -39,7 +39,7 @@ export default function ConvertCZK({route, navigation}) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.contentContainer}
@@ -56,7 +56,6 @@ export default function ConvertCZK({route, navigation}) {
           </Text>
         </View>
         <Picker
-            style = {styles.pickerStyle}
             selectedValue={selectedCurrencyCode}
             onValueChange={(value, index) => handleValueChange(value, index)}
           >
@@ -66,10 +65,12 @@ export default function ConvertCZK({route, navigation}) {
           <Text style={styles.titleText}>{convertedValue + " " + currencyInfo.currency}</Text>
         </View>
       </KeyboardAvoidingView>
-      <Pressable style={styles.button} onPress={() => navigation.goBack()} >
-          <Text style={styles.text}>Close</Text>
-      </Pressable>
-    </View>
+      <View style={styles.buttonContainer} >
+        <Pressable style={styles.button} onPress={() => navigation.goBack()} >
+            <Text style={styles.buttonText}>Close</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -87,46 +88,41 @@ function PickerItem(info: CurrencyInfo) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   },
   button: {
-    width: "80%",
+    height: 64,
     justifyContent: 'center',
-    alignContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
     borderRadius: 4,
-    elevation: 3,
-    backgroundColor: 'blue'    
+    backgroundColor: '#f194ff'
   },
-  text: {
-    flex: 1,
-    fontSize: 16,
-    lineHeight: 21,
+  buttonContainer: {
+    paddingHorizontal: 32,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 18,
     fontWeight: 'bold',
     letterSpacing: 0.25,
     color: 'white',
   },
   contentContainer: {
     flex: 1,
-    flexDirection: 'column',
-    alignContent: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white'
+    justifyContent: 'center'
   },
   input: {
     flex: 1/2,
     height: 40,
     margin: 12,
     borderWidth: 1,
+    borderRadius: 4,
     padding: 10,
-    justifyContent: 'center',
-    alignContent: 'center'
+    textAlign: 'center'
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center'
   },
   text: {
     padding: 10,
@@ -138,8 +134,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500'
   },
-  pickerStyle: {
-    justifyContent: 'center',
-    alignContent: 'center'
-  }
 });

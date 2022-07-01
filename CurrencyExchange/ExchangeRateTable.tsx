@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { FlatList, ListRenderItem, Text, StyleSheet, Button, View, Modal } from 'react-native';
+import { FlatList, ListRenderItem, Text, StyleSheet, Button, View, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ConvertCZK from './ConvertCZK';
 type TableInfo = {
   data: string[]
 }
@@ -18,34 +17,24 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
       <Text style={styles.rowItem}>{item.amount}</Text>
       <Text style={styles.rowItem}>{item.rate}</Text>
     </View>
-    
   );
-
-  const [visible, setVisible] = React.useState(false);
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
-
   const navigation = useNavigation();
 
   return(
-    <>
-      <>
-        <FlatList 
-          data={listData}
-          renderItem={renderItem}
-          style={styles.flatList}
-        />
-        <Button
-          title="Convert CZK"
-          color="#f194ff"
-          onPress={() =>
-            navigation.navigate('ConvertCZK', { currencyList: listData })
-          }
-        />
-      </>
-    </>
-    
+    <SafeAreaView>
+      <FlatList 
+        data={listData}
+        renderItem={renderItem}
+        style={styles.flatList}
+      />
+      <Button
+        title="Convert CZK"
+        color="#f194ff"
+        onPress={() =>
+          navigation.navigate('ConvertCZK', { currencyList: listData })
+        }
+      />
+    </SafeAreaView>
   );
 }
 

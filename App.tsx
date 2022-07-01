@@ -25,10 +25,18 @@ export default function App() {
     <NavigationContainer>
       <RootStack.Navigator>
         <RootStack.Group>
-          <RootStack.Screen name="Exchange Rate Table" component={CurrencyExchange} />
+          <RootStack.Screen
+           name="ExchangeRateTable" 
+           component={CurrencyExchange} 
+           options={{ title: 'Exchange Rate Table' }}
+          />
         </RootStack.Group>
         <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-          <RootStack.Screen name="ConvertCZK" component={ConvertCZK} />
+          <RootStack.Screen 
+          name="ConvertCZK" 
+          component={ConvertCZK} 
+          options={{ title: 'Convert CZK' }}
+        />
         </RootStack.Group>
       </RootStack.Navigator>
     </NavigationContainer>
