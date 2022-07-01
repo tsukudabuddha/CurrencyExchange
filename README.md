@@ -3,4 +3,4 @@ React native app that retrieves latest currency exchange rates from the Czech Na
 
 ## Screenshots
 ![List Image](resources/list.png)
-![Text Entry Image](resources/textEntry.png)
+![Text Entry Image](resources/modal.png)
