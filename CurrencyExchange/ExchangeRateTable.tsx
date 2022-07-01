@@ -1,6 +1,8 @@
 import * as React from 'react';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList, ListRenderItem, Text, StyleSheet, Button, View, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
 type TableInfo = {
   data: string[]
 }
@@ -18,7 +20,7 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
       <Text style={styles.rowItem}>{item.rate}</Text>
     </View>
   );
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>>();
 
   return(
     <SafeAreaView>
@@ -31,7 +33,7 @@ export function ExchangeRateTable(tableInfo: TableInfo) {
         title="Convert CZK"
         color="#f194ff"
         onPress={() =>
-          navigation.navigate('ConvertCZK', { currencyList: listData })
+          navigation.navigation.navigate('ConvertCZK', { currencyList: listData })
         }
       />
     </SafeAreaView>

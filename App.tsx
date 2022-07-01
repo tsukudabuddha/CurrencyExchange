@@ -13,7 +13,7 @@ type CurrencyInfo = {
   rate: string;
 }
 
-type RootStackParamList = {
+export type RootStackParamList = {
   ExchangeRateTable: undefined;
   ConvertCZK: { currencyList: CurrencyInfo[] };
 };

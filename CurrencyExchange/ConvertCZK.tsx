@@ -1,6 +1,8 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, KeyboardAvoidingView, Platform, Pressable} from "react-native";
 import { Picker } from '@react-native-picker/picker';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from "../App";
 
 type CurrencyInfo = {
   country: string;
@@ -10,14 +12,10 @@ type CurrencyInfo = {
   rate: string;
 }
 
-type ConvertCZKProps = {
-  currencyList: CurrencyInfo[]
-  visible: boolean
-  dismissHandler: () => void
-}
+type Props = NativeStackScreenProps<RootStackParamList, 'ConvertCZK'>;
 
-export default function ConvertCZK({route, navigation}) {
-  let currencyList = route.params.currencyList
+export default function ConvertCZK(props: Props) {
+  let currencyList = props.route.params.currencyList
   currencyList.sort((a,b) => (a.code > b.code) ? 1 : ((b.code > a.code) ? -1 : 0))
 
   const [czhValue, setInputValue] = React.useState(0);
@@ -66,7 +64,7 @@ export default function ConvertCZK({route, navigation}) {
         </View>
       </KeyboardAvoidingView>
       <View style={styles.buttonContainer} >
-        <Pressable style={styles.button} onPress={() => navigation.goBack()} >
+        <Pressable style={styles.button} onPress={() => props.navigation.goBack()} >
             <Text style={styles.buttonText}>Close</Text>
         </Pressable>
       </View>
